@@ -1,0 +1,153 @@
+import sqlite3
+
+
+conn = sqlite3.connect('diccionario.db')
+c = conn.cursor()
+
+
+c.execute('''CREATE TABLE IF NOT EXISTS diccionario
+             (palabra text PRIMARY KEY, definicion text)''')
+
+def menu():
+    print("Bienvenido al diccionario:")
+    print("1. Buscar una palabra")
+    print("2. Añadir una palabra")
+    print("3. Eliminar una palabra")
+    print("4. Editar una palabra")
+    print("5. Salir")
+
+
+def buscar_palabra():
+    palabra = input("Introduce la palabra que quieres buscar: ")
+    c.execute("SELECT definicion FROM diccionario WHERE palabra=?", (palabra,))
+    resultado = c.fetchone()
+    if resultado:
+        print(palabra + ": " + resultado[0])
+    else:
+        print("La palabra no se encuentra en el diccionario")
+
+def anadir_palabra():
+    palabra = input("Introduce la palabra que quieres añadir: ")
+    definicion = input("Introduce la definición de la palabra: ")
+    try:
+        c.execute("INSERT INTO diccionario VALUES (?, ?)", (palabra, definicion))
+        conn.commit()
+        print("Palabra añadida correctamente")
+    except sqlite3.IntegrityError:
+        print("La palabra ya existe en el diccionario")
+
+def eliminar_palabra():
+    palabra = input("Introduce la palabra que quieres eliminar: ")
+    c.execute("DELETE FROM diccionario WHERE palabra=?", (palabra,))
+    if c.rowcount == 1:
+        conn.commit()
+        print("Palabra eliminada correctamente")
+    else:
+        print("La palabra no se encuentra en el diccionario")
+
+def editar_palabra():
+    palabra = input("Introduce la palabra que quieres editar: ")
+    c.execute("SELECT definicion FROM diccionario WHERE palabra=?", (palabra,))
+    resultado = c.fetchone()
+    if resultado:
+        print(palabra + ": " + resultado[0])
+        definicion = input("Introduce la nueva definición de la palabra: ")
+        c.execute("UPDATE diccionario SET definicion=? WHERE palabra=?", (definicion, palabra))
+        conn.commit()
+        print("Palabra editada correctamente")
+    else:
+        print("La palabra no se encuentra en el diccionario")
+
+while True:
+    menu()
+    opcion = input("Elige una opción: ")
+    if opcion == "1":
+        buscar_palabra()
+    elif opcion == "2":
+        anadir_palabra()
+    elif opcion == "3":
+        eliminar_palabra()
+    elif opcion == "4":
+        editar_palabra()
+    elif opcion == "5":
+        print("¡Hasta luego!")
+        break
+    else:
+        print("Opción inválida")
+
+conn.close()
+import sqlite3
+
+conn = sqlite3.connect('diccionario.db')
+c = conn.cursor()
+
+c.execute('''CREATE TABLE IF NOT EXISTS diccionario
+             (palabra text PRIMARY KEY, definicion text)''')
+
+def menu():
+    print("Bienvenido al diccionario Panameno:")
+    print("1. Buscar una palabra")
+    print("2. Añadir una palabra")
+    print("3. Eliminar una palabra")
+    print("4. Editar una palabra")
+    print("5. Salir")
+
+def buscar_palabra():
+    palabra = input("Introduce la palabra que quieres buscar: ")
+    c.execute("SELECT definicion FROM diccionario WHERE palabra=?", (palabra,))
+    resultado = c.fetchone()
+    if resultado:
+        print(palabra + ": " + resultado[0])
+    else:
+        print("La palabra no se encuentra en el diccionario")
+
+def anadir_palabra():
+    palabra = input("Introduce la palabra que quieres añadir: ")
+    definicion = input("Introduce la definición de la palabra: ")
+    try:
+        c.execute("INSERT INTO diccionario VALUES (?, ?)", (palabra, definicion))
+        conn.commit()
+        print("Palabra añadida correctamente")
+    except sqlite3.IntegrityError:
+        print("La palabra ya existe en el diccionario")
+
+def eliminar_palabra():
+    palabra = input("Introduce la palabra que quieres eliminar: ")
+    c.execute("DELETE FROM diccionario WHERE palabra=?", (palabra,))
+    if c.rowcount == 1:
+        conn.commit()
+        print("Palabra eliminada correctamente")
+    else:
+        print("La palabra no se encuentra en el diccionario")
+
+def editar_palabra():
+    palabra = input("Introduce la palabra que quieres editar: ")
+    c.execute("SELECT definicion FROM diccionario WHERE palabra=?", (palabra,))
+    resultado = c.fetchone()
+    if resultado:
+        print(palabra + ": " + resultado[0])
+        definicion = input("Introduce la nueva definición de la palabra: ")
+        c.execute("UPDATE diccionario SET definicion=? WHERE palabra=?", (definicion, palabra))
+        conn.commit()
+        print("Palabra editada correctamente")
+    else:
+        print("La palabra no se encuentra en el diccionario")
+
+while True:
+    menu()
+    opcion = input("Elige una opción: ")
+    if opcion == "1":
+        buscar_palabra()
+    elif opcion == "2":
+        anadir_palabra()
+    elif opcion == "3":
+        eliminar_palabra()
+    elif opcion == "4":
+        editar_palabra()
+    elif opcion == "5":
+        print("¡Hasta luego!")
+        break
+    else:
+        print("Opción inválida")
+
+conn.close()
